@@ -1,0 +1,138 @@
+//google api key
+{
+    "count": 22,
+    "result": [
+        {
+            "description": "Apple",
+            "displaySymbol": "APCT.DU",
+            "symbol": "APCT.DU",
+            "type": ""
+        },
+        {
+            "description": "Apple",
+            "displaySymbol": "A3KUT6.MU",
+            "symbol": "A3KUT6.MU",
+            "type": ""
+        },
+        {
+            "description": "Apple",
+            "displaySymbol": "A3KUT6.DU",
+            "symbol": "A3KUT6.DU",
+            "type": ""
+        },
+        {
+            "description": "Apple",
+            "displaySymbol": "A2R7JT.BE",
+            "symbol": "A2R7JT.BE",
+            "type": ""
+        },
+        {
+            "description": "Apple",
+            "displaySymbol": "APCT.MU",
+            "symbol": "APCT.MU",
+            "type": ""
+        },
+        {
+            "description": "Apple",
+            "displaySymbol": "A3LHSS.BE",
+            "symbol": "A3LHSS.BE",
+            "type": ""
+        },
+        {
+            "description": "Apple",
+            "displaySymbol": "A19C0M.HA",
+            "symbol": "A19C0M.HA",
+            "type": ""
+        },
+        {
+            "description": "Apple",
+            "displaySymbol": "A3LHSR.DU",
+            "symbol": "A3LHSR.DU",
+            "type": ""
+        },
+        {
+            "description": "Apple",
+            "displaySymbol": "A1HKKY.HA",
+            "symbol": "A1HKKY.HA",
+            "type": ""
+        },
+        {
+            "description": "Apple",
+            "displaySymbol": "A3LHSN.BE",
+            "symbol": "A3LHSN.BE",
+            "type": ""
+        },
+        {
+            "description": "Apple",
+            "displaySymbol": "APC5.DU",
+            "symbol": "APC5.DU",
+            "type": ""
+        },
+        {
+            "description": "Apple",
+            "displaySymbol": "A3K78V.BE",
+            "symbol": "A3K78V.BE",
+            "type": ""
+        },
+        {
+            "description": "Apple",
+            "displaySymbol": "A2R7JT.DU",
+            "symbol": "A2R7JT.DU",
+            "type": ""
+        },
+        {
+            "description": "Apple",
+            "displaySymbol": "A3LHSS.MU",
+            "symbol": "A3LHSS.MU",
+            "type": ""
+        },
+        {
+            "description": "Apple",
+            "displaySymbol": "APCU.MU",
+            "symbol": "APCU.MU",
+            "type": ""
+        },
+        {
+            "description": "Apple",
+            "displaySymbol": "A3K78U.BE",
+            "symbol": "A3K78U.BE",
+            "type": ""
+        },
+        {
+            "description": "Apple",
+            "displaySymbol": "A3KUT3.MU",
+            "symbol": "A3KUT3.MU",
+            "type": ""
+        },
+        {
+            "description": "Apple",
+            "displaySymbol": "APC5.BE",
+            "symbol": "APC5.BE",
+            "type": ""
+        },
+        {
+            "description": "Apple",
+            "displaySymbol": "A3LHSP.DU",
+            "symbol": "A3LHSP.DU",
+            "type": ""
+        },
+        {
+            "description": "Apple",
+            "displaySymbol": "A3KUT6.BE",
+            "symbol": "A3KUT6.BE",
+            "type": ""
+        },
+        {
+            "description": "Apple",
+            "displaySymbol": "APCL.DU",
+            "symbol": "APCL.DU",
+            "type": ""
+        },
+        {
+            "description": "Apple",
+            "displaySymbol": "APCT.BE",
+            "symbol": "APCT.BE",
+            "type": ""
+        }
+    ]
+}
