@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, Response
 from chatbot import predict_class, get_response
 from utilities import  get_stock_data, generate_stock_response, generate_mongo_response
 import spacy
-from middleware.InitiateMiddleware import initiateQueryLookup
+from middleware.InitiateMiddleware import initiate_query_lookup
 import json
 
 
