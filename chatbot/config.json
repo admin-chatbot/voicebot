@@ -1,0 +1,13 @@
+{
+    "database_type": "mongo",
+    "mongo_config": {
+        "uri": "mongodb+srv://surajpatra25:W7ygMw7jAjOlB0vz@cluster0.qjixfoi.mongodb.net/?retryWrites=true&w=majority",
+        "username": "surajpatra25",
+        "password": "W7ygMw7jAjOlB0vz",
+        "db_name": "command_center",
+        "collection_name": "service"
+    },
+    "sql_config": {
+        "database": "your_sqlite_database.db"
+    }
+}

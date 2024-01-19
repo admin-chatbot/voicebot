@@ -2,15 +2,7 @@
 
 import json
 import subprocess
-import spacy
 
-# Load the English NLP model from SpaCy
-nlp = spacy.load("en_core_web_sm")
-
-# Function to extract named entities from user input using SpaCy
-def extract_entities(user_input):
-    doc = nlp(user_input)
-    return [ent.text for ent in doc.ents if ent.label_ == "ORG"]
 
 # Function to make a curl request and parse the JSON response
 def get_stock_data(symbol):
@@ -21,4 +13,8 @@ def get_stock_data(symbol):
 # Function to generate a bot response for stock-related intent
 def generate_stock_response(entities, stock_data):
     c_property_value = stock_data.get("c")
-    return f"Current share price of {entities[0]} is - {c_property_value}"
+    return f"Current share price of {entities} is - {c_property_value}"
+
+def generate_mongo_response(results):
+    
+    return f"response found from mongoDB is - {results}"

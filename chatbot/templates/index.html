@@ -3,71 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chatbot Demo</title>
+    <title>AutoBot</title>
 </head>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 <body>
-    <h1>Chatbot Demo</h1>
-    
-    <form action="/chat" method="post">
-        <label for="user_input">You:</label>
-        <input type="text" id="user_input" name="user_input" required>
+    <h1>AutoBot V1</h1>
+    <div id="chatContainer">
+        {% if user_input %}
+            <h2>You: </h2>
+            <p>{{ user_input }}</p>
+        {% endif %}
+        <div id="botResponseContainer">
+            {% if bot_response %}
+                <p id="botResponse"><b>Bot: {{ bot_response }}</b></p>
+                <!-- Add a button to trigger voice output -->
+                <button type="button" id="speakButton">Speak</button>
+            {% endif %}
+        </div>
+    </div>
+    <form id="chatForm">
+        <label for="user_input"><b>You</b></label><br>
+        <input type="text" id="user_input" placeholder="How can i help?" name="user_input" required>
         
         <!-- Add a button to trigger voice input -->
         <button type="button" id="voiceButton">Speak</button>
 
-        <button type="submit">Send</button>
+        <button type="button" onclick="sendMessage()">Send</button>
     </form>
-
-    {% if user_input %}
-        <p>You: {{ user_input }}</p>
-    {% endif %}
-    {% if bot_response %}
-        <p>Bot: {{ bot_response }}</p>
-        <!-- Add a button to trigger voice output -->
-        <button type="button" id="speakButton">Speak</button>
-    {% endif %}
-
-    <script async src="https://cse.google.com/cse.js?cx=33e73d73629a049bf">
-    </script>
-    <div class="gcse-search"></div>
+    <script async src="https://cse.google.com/cse.js?cx=33e73d73629a049bf"></script>
     <!-- Include the script for voice input and output -->
-    <script>
-        // Check if the browser supports the Web Speech API
-        if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
-            const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-
-            // Configure recognition settings if needed
-            // recognition.continuous = true;
-
-            document.getElementById('voiceButton').addEventListener('click', () => {
-                recognition.start();
-            });
-
-            recognition.onresult = (event) => {
-                const last = event.results.length - 1;
-                const userVoiceInput = event.results[last][0].transcript;
-                document.getElementById('user_input').value = userVoiceInput;
-            };
-
-            recognition.onerror = (event) => {
-                console.error('Speech recognition error:', event.error);
-            };
-        } else {
-            console.error('Speech recognition not supported in this browser.');
-        }
-
-        // Speech synthesis function
-        function speak(text) {
-            const synth = window.speechSynthesis;
-            const utterance = new SpeechSynthesisUtterance(text);
-            synth.speak(utterance);
-        }
-
-        // Trigger TTS when the "Speak" button is clicked
-        document.getElementById('speakButton').addEventListener('click', () => {
-            const botResponse = document.querySelector('p[style="color: green;"]').innerText; // Adjust this selector based on your actual output style
-            speak(botResponse);
-        });
-    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
