@@ -7,11 +7,19 @@ function appendUserInput(userInput) {
     botResponseContainer.scrollTop = botResponseContainer.scrollHeight;
 }
 
-function appendBotResponse(response) {
+function appendBotResponse(response, type) {
     const botResponseContainer = document.getElementById('botResponseContainer');
     const botResponseElement = document.createElement('p');
-    botResponseElement.innerHTML = `<strong style="font-size: 20px;">Automate Sync:</strong><br>${response}`;
-    
+
+    // Check if the response is equal to the clientId
+    if (response === "requestClientID") {
+        botResponseElement.innerHTML = `<strong style="font-size: 20px;" id="requestClientID">Automate Sync:</strong><br>Please provide your client id`;
+        window.automatesync={"requestClientID":true};
+    } else {
+        botResponseElement.innerHTML = `<strong style="font-size: 20px;">Automate Sync:</strong><br>${response}`;
+        window.automatesync={"hasClientID":true,"requestClientID":false};
+    }
+
     botResponseContainer.appendChild(botResponseElement);
     botResponseContainer.scrollTop = botResponseContainer.scrollHeight;
 }
@@ -26,22 +34,30 @@ function sendMessage() {
     loadingElement.innerHTML = 'Bot is typing...';
     loadingElement.classList.add('loading-animation');
     botResponseContainer.appendChild(loadingElement);
-
-    fetch('/chat', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: `user_input=${encodeURIComponent(user_input)}`,
-    })
-    .then(response => response.text())
-    .then(bot_response => {
+    if(window?.automatesync?.requestClientID){
+        setCookie("client_id",user_input)
         botResponseContainer.removeChild(loadingElement);
-        appendBotResponse(bot_response);
-    })
-    .catch(error => {
-        console.error('Error sending message:', error);
-    });
+        appendBotResponse("Thank you! What can i help you with ?");
+    }
+    else{
+        
+        fetch('/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `user_input=${encodeURIComponent(user_input)}`,
+        })
+        .then(response => response.text())
+        .then(bot_response => {
+            botResponseContainer.removeChild(loadingElement);
+            appendBotResponse(bot_response);
+        })
+        .catch(error => {
+            console.error('Error sending message:', error);
+        });
+    }
+    
 
     userInputElement.value = '';
 }

@@ -1,6 +1,7 @@
 import json
 from urllib.parse import quote_plus
 from middleware.DatabaseMiddleware import DatabaseMiddleware
+from datetime import datetime, timezone
 
 def load_config():
     # Load configuration from file
@@ -38,10 +39,10 @@ def create_db_middleware(config):
         config.get("mongo_config", {}).get("uri", "")
     )
 
-def query_mongodb(db_middleware, keyword_field, keyword_value):
+def query_mongodb(db_middleware, keyword_field, keyword_value,client_id):
     # Example query
     print(f"query the mongodb database with field name - '{keyword_field}' and value - '{keyword_value}'")
-    results = db_middleware.execute_query(keyword_field, keyword_value)       
+    results = db_middleware.execute_query(keyword_field, keyword_value,client_id)       
     return results
 
 def process_results(results):
@@ -58,13 +59,13 @@ def close_connection(db_middleware):
     # Close the connection
     db_middleware.close_connection()
 
-def initiate_query_lookup(keyword_field, keyword_value):
+def initiate_query_lookup(keyword_field, keyword_value,client_id):
     config = load_config()
     escape_credentials(config)
     
     db_middleware = create_db_middleware(config)
 
-    results = query_mongodb(db_middleware, keyword_field, keyword_value)
+    results = query_mongodb(db_middleware, keyword_field, keyword_value, client_id)
 
     result_values = process_results(results)
 
@@ -91,25 +92,47 @@ def insert_to_servicelog(keyword_field, keyword_value):
 
     return result_values
 
-def write_mongodb_botrequestlog(db_middleware, keyword_field, keyword_value):
+def write_mongodb_botrequestlog(db_middleware, user_id, user_input, user_intent):
     # Example query
-    print(f"insert the mongodb database with field name - '{keyword_field}' and value - '{keyword_value}'")
-    results = db_middleware.execute_botrequestlog_insert(keyword_field, keyword_value)       
+    # Get the current UTC time
+    current_utc_time = datetime.utcnow().replace(tzinfo=timezone.utc)
+
+    # Example query
+    print(f"Inserting into 'botrequestlog' collection - User ID: {user_id}, User Input: {user_input}, User Intent: {user_intent}, Timestamp: {current_utc_time}")
+    
+    # Modify the following line based on the structure of your 'botrequestlog' documents
+    document = {
+        "user_id": user_id,
+        "user_input": user_input,
+        "user_intent": user_intent,
+        "timestamp": current_utc_time
+    }
+    
+    results = db_middleware.execute_botrequestlog_insert(document)
+    
+    return results
+    # Modify the following line based on the structure of your 'botrequestlog' documents
+    document = {"user_id": user_id, "user_input": user_input, "user_intent": user_intent}
+    
+    results = db_middleware.execute_botrequestlog_insert(document)
+    
     return results
 
-def insert_to_botrequestlog(keyword_field, keyword_value):
+def insert_to_botrequestlog(user_id, user_input, user_intent):
     config = load_config()
     escape_credentials(config)
     
     db_middleware = create_db_middleware(config)
 
-    results = write_mongodb_botrequestlog(db_middleware, keyword_field, keyword_value)
+    results = write_mongodb_botrequestlog(db_middleware, user_id, user_input, user_intent)
 
-    result_values = process_results(results)
+    # You can choose whether or not to process and return results based on your requirements
+    # result_values = process_results(results)
 
     close_connection(db_middleware)
 
-    return result_values
+    # Return any relevant information based on your application needs
+    return results
 
 # If this script is run directly
 if __name__ == "__main__":

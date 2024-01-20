@@ -1,10 +1,11 @@
 # Import necessary modules
 from flask import Flask, render_template, request, Response
 from chatbot import predict_class, get_response
-from utilities import  get_stock_data, generate_stock_response, generate_mongo_response
+from utilities import  get_stock_data, generate_stock_response, generate_mongo_response, get_user_id_from_cookie
 import spacy
-from middleware.InitiateMiddleware import initiate_query_lookup
+from middleware.InitiateMiddleware import initiate_query_lookup,insert_to_botrequestlog
 import json
+from identity.decission import decision_module
 
 
 # Initialize the Flask app
@@ -25,15 +26,22 @@ def index():
 def chat():
     # Get user input from the form
     user_input = request.form['user_input']
-
+    user_id = request.cookies.get('userId')
+    print("request for user-", user_id)
+    result = decision_module(request)
+    if result=="clientID":
+         return Response("requestClientID", content_type='text/plain')
     # Process user input using the chatbot's predict_class function
+    client_id=request.cookies.get('client_id')
     processed_input = predict_class(user_input)
     # Load intent list from intent_config.json
     intent_list=None
+    user_intent=None
     with open("chatbot/intent_config.json", "r") as intent_file:
         intent_config = json.load(intent_file)
         intent_list = intent_config.get("intentList", [])
     # Check if the intent is related to "stocks"
+        user_intent=processed_input[0]['intent']
     if processed_input[0]['intent'] == "stocks":
         # Extract named entities from user input
         
@@ -55,7 +63,7 @@ def chat():
         keyword_value = processed_input[0]['intent']
 
         # Call the initiatemiddleware function to retrieve data from MongoDB
-        results = initiate_query_lookup(keyword_field, keyword_value)
+        results = initiate_query_lookup(keyword_field, keyword_value,client_id)
 
         # Additional processing based on the MongoDB data can be added here if needed
         # For example, you can generate a response using the retrieved data
@@ -69,7 +77,7 @@ def chat():
 
     # Render the template with user input and bot response
     text_response = f'{bot_response}'
-
+    insert_to_botrequestlog(user_id, user_input, user_intent)
     return Response(text_response, content_type='text/plain')
 # Run the Flask app if this script is the main module
 if __name__ == '__main__':

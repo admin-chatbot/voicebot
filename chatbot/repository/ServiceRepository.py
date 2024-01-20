@@ -8,11 +8,11 @@ class ServiceRepository:
         self.client = MongoClient(uri, server_api=ServerApi('1'))
         self.db = self.client.get_database("command_center")
 
-    def find_by_keyword(self, keyword_field, keyword_value):
+    def find_by_keyword(self, keyword_field, keyword_value,client_id):
         # Your query logic here
         # For example, using the 'products' collection:
         collection = self.db.service
-        query = {keyword_field: keyword_value}
+        query = {keyword_field: keyword_value,"clientId":client_id}
         results = collection.find(query)
         return results
     
@@ -24,11 +24,11 @@ class ServiceRepository:
         result = collection.insert_one(document)
         return result.inserted_id
     
-    def insert_data_to_botrequestlog(self, keyword_field, keyword_value, data):
+    def insert_data_to_botrequestlog(self, data):
         # Your insertion logic here
         # For example, using the 'service' collection:
         collection = self.db.botrequestlog
-        document = {keyword_field: keyword_value, "data": data}
+        document = data
         result = collection.insert_one(document)
         return result.inserted_id
 

@@ -15,6 +15,14 @@ def generate_stock_response(entities, stock_data):
     c_property_value = stock_data.get("c")
     return f"Current share price of {entities} is - {c_property_value}"
 
+def get_user_id_from_cookie(request):
+    user_id_cookie = request.cookies.get('userId')
+    print("request for user-", user_id_cookie)
+    if user_id_cookie:
+        return user_id_cookie
+    else:
+        return ''
+
 def generate_mongo_response(results):
     
     return f"response found from mongoDB is - {results}"
