@@ -41,7 +41,7 @@ def create_db_middleware(config):
 
 def query_mongodb(db_middleware, keyword_field, keyword_value,client_id):
     # Example query
-    print(f"query the mongodb database with field name - '{keyword_field}' and value - '{keyword_value}'")
+    print(f"query the mongodb database with field name - '{keyword_field}'  value - '{keyword_value}' for clientID '{client_id}")
     results = db_middleware.execute_query(keyword_field, keyword_value,client_id)       
     return results
 
@@ -51,7 +51,7 @@ def process_results(results):
     for product in results:
         print(product)
         value = product.get("name")  # Replace "value" with the actual field name
-        result_values.append(value)
+        result_values.append(product)
         print(value)
     return result_values
 
@@ -70,6 +70,7 @@ def initiate_query_lookup(keyword_field, keyword_value,client_id):
     result_values = process_results(results)
 
     close_connection(db_middleware)
+    print(f"results from the service query '{result_values}'")
 
     return result_values
 def write_mongodb_servicelog(db_middleware, keyword_field, keyword_value):
@@ -136,6 +137,6 @@ def insert_to_botrequestlog(user_id, user_input, user_intent):
 
 # If this script is run directly
 if __name__ == "__main__":
-    initiate_query_lookup("keyword", "leave")
-    insert_to_botrequestlog('keyword','leave')
+    initiate_query_lookup("keyword", "leaves",1)
+    insert_to_botrequestlog('keyword','leave',"leaves-test")
 

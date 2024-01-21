@@ -24,5 +24,13 @@ def get_user_id_from_cookie(request):
         return ''
 
 def generate_mongo_response(results):
-    
-    return f"response found from mongoDB is - {results}"
+    print(f"mongo response '{results}'")
+    response = get_services_data(results[0]['endpoint'])
+    return f"response found from mongoDB is - {response}"
+
+def get_services_data(url):
+    print(f"calling endpoint '{url}'")
+    curl_command = f'curl "{url}"'
+    response = subprocess.run(curl_command, shell=True, capture_output=True, text=True)
+    return json.loads(response.stdout)
+

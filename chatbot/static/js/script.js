@@ -108,3 +108,22 @@ if (userIdFromCookie) {
 } else {
     console.log('User ID not found in Cookie');
 }
+
+function handleKeyPress(event) {
+    // Check if the pressed key is Enter (key code 13)
+    if (event.keyCode === 13) {
+        sendMessage();
+    }
+}
+
+// Function to handle voice button click
+function handleVoiceButtonClick() {
+    // Add logic for handling voice input if needed
+    console.log("Voice button clicked");
+}
+
+// Add event listeners to call sendMessage on Enter key press
+document.getElementById('user_input').addEventListener('keypress', handleKeyPress);
+
+// Add event listener for voice button click
+document.getElementById('voiceButton').addEventListener('click', handleVoiceButtonClick);

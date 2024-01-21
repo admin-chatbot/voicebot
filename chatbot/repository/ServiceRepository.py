@@ -13,6 +13,7 @@ class ServiceRepository:
         # For example, using the 'products' collection:
         collection = self.db.service
         query = {keyword_field: keyword_value,"clientId":client_id}
+        print(f"query is '{query}'")
         results = collection.find(query)
         return results
     

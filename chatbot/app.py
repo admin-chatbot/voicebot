@@ -63,8 +63,8 @@ def chat():
         keyword_value = processed_input[0]['intent']
 
         # Call the initiatemiddleware function to retrieve data from MongoDB
-        results = initiate_query_lookup(keyword_field, keyword_value,client_id)
-
+        #results = initiate_query_lookup(keyword_field, keyword_value,client_id)
+        results = initiate_query_lookup("keyword",  keyword_value,int(client_id))
         # Additional processing based on the MongoDB data can be added here if needed
         # For example, you can generate a response using the retrieved data
 
