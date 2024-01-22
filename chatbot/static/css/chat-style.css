@@ -1,0 +1,29 @@
+/* chat-style.css */
+
+#chatContainer {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    top: 0;
+    width: 360px;
+    height: calc(100% - 40px);
+    overflow-y: hidden;
+    background: #f8f8f8;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+}
+
+#chatIcon {
+    cursor: pointer;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background: turquoise;
+    border-radius: 50%;
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+}

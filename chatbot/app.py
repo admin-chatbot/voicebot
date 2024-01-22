@@ -21,6 +21,9 @@ nlp = spacy.load("en_core_web_sm")
 def index():
     return render_template('index.html')
 
+@app.route('/chat-form')
+def chatform():
+    return render_template('chat-form.html')
 # Define the route for handling user input and generating responses
 @app.route('/chat', methods=['POST'])
 def chat():

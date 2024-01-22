@@ -127,3 +127,26 @@ document.getElementById('user_input').addEventListener('keypress', handleKeyPres
 
 // Add event listener for voice button click
 document.getElementById('voiceButton').addEventListener('click', handleVoiceButtonClick);
+
+function startSpeechRecognition() {
+    const recognition = new webkitSpeechRecognition() || new SpeechRecognition();
+
+    recognition.lang = 'en-US';
+    recognition.interimResults = false;
+
+    recognition.onresult = function(event) {
+        const result = event.results[0][0].transcript;
+        document.getElementById('user_input').value = result;
+    };
+
+    recognition.onerror = function(event) {
+        alert('Speech recognition error: ' + event.error);
+    };
+
+    recognition.onend = function() {
+       console.log("you said",result);
+       sendMessage()
+    };
+
+    recognition.start();
+}

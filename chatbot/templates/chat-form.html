@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoBot</title>
+</head>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<body>
+    <header>
+        <div style="display: flex; align-items: center;">
+            <h1 style="margin-right: 10px;">AutoBot V1</h1>
+            <img src="static/assets/bot-icon.svg" alt="Chat Icon" style="width: 40px; height: 40px;">
+        </div>
+        
+    </header>
+    <div id="chatContainer">
+        {% if user_input %}
+            <h2>You: </h2>
+            <p>{{ user_input }}</p>
+        {% endif %}
+        <div id="botResponseContainer">
+            {% if bot_response %}
+                <p id="botResponse"><b>Bot: {{ bot_response }}</b></p>
+                <!-- Add a button to trigger voice output -->
+                <button type="button" id="speakButton">Speak</button>
+            {% endif %}
+        </div>
+    </div>
+    <form id="chatForm">
+        <label for="user_input"><b></b></label><br>
+        <input type="text" id="user_input" placeholder="How can i help?" name="user_input" required>
+        
+        <!-- Add a button to trigger voice input -->
+        <button type="button" id="voiceButton" onclick="startSpeechRecognition()">Speak</button>
+
+        <button type="button" id="submitButton" onclick="sendMessage()">Send</button>
+    </form>
+    <script async src="https://cse.google.com/cse.js?cx=33e73d73629a049bf"></script>
+    <!-- Include the script for voice input and output -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
