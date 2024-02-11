@@ -17,11 +17,18 @@ class ServiceRepository:
         results = collection.find(query)
         return results
     
-    def insert_data_to_servicelog(self, keyword_field, keyword_value, data):
+    def query_service_params(self,serviceId):
+        collection = self.db.serviceparameters
+        query = {"serviceId":serviceId}
+        results = collection.find(query)
+        print(f"service parameters results are:- '{results}'")
+        return results
+    
+    def insert_data_to_servicelog(self, keyword_field, keyword_value, client_id,endpoint):
         # Your insertion logic here
         # For example, using the 'service' collection:
         collection = self.db.servicelog
-        document = {keyword_field: keyword_value, "data": data}
+        document = {keyword_field: keyword_value, "client": client_id,"endpoint":endpoint}
         result = collection.insert_one(document)
         return result.inserted_id
     

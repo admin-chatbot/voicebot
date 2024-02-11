@@ -5,16 +5,6 @@
     const chatContainer = document.createElement('div');
     chatContainer.id = 'chatContainer';
     chatContainer.style.display = 'none';
-    chatContainer.style.position = 'fixed';
-    chatContainer.style.bottom = '20px';
-    chatContainer.style.right = '20px';
-    chatContainer.style.top = '0'; // Stretch from the bottom to the top
-    chatContainer.style.width = '400px';
-    chatContainer.style.height = 'calc(100% - 40px)'; // Adjusted height
-    chatContainer.style.background = '#f8f8f8';
-    chatContainer.style.border = '1px solid #ccc';
-    chatContainer.style.borderRadius = '15px';
-
     // Append the chat container to the body
     document.body.appendChild(chatContainer);
 

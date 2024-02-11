@@ -14,10 +14,15 @@ function appendBotResponse(response, type) {
     // Check if the response is equal to the clientId
     if (response === "requestClientID") {
         botResponseElement.innerHTML = `<strong style="font-size: 20px;" id="requestClientID">Automate Sync:</strong><br>Please provide your client id`;
-        window.automatesync={"requestClientID":true};
+        if (window && window.automatesync) {
+            window.automatesync.requestClientID = true;
+        }
     } else {
         botResponseElement.innerHTML = `<strong style="font-size: 20px;">Automate Sync:</strong><br>${response}`;
-        window.automatesync={"hasClientID":true,"requestClientID":false};
+        if (window && window.automatesync) {
+            window.automatesync.hasClientID = true;
+            window.automatesync.requestClientID = false;
+        }
     }
 
     botResponseContainer.appendChild(botResponseElement);
@@ -26,7 +31,7 @@ function appendBotResponse(response, type) {
 
 function sendMessage() {
     const userInputElement = document.getElementById('user_input');
-    const user_input = userInputElement.value;
+    let user_input = userInputElement.value;
 
     appendUserInput(user_input);
 
@@ -34,12 +39,24 @@ function sendMessage() {
     loadingElement.innerHTML = 'Bot is typing...';
     loadingElement.classList.add('loading-animation');
     botResponseContainer.appendChild(loadingElement);
-    if(window?.automatesync?.requestClientID){
-        setCookie("client_id",user_input)
+    if (!window.automatesync) {
+        window.automatesync = {}
+    }
+    if (window && window.automatesync && window.automatesync.requestClientID) {
+        setCookie("client_id", user_input);
         botResponseContainer.removeChild(loadingElement);
         appendBotResponse("Thank you! What can i help you with ?");
     }
-    else{
+    else {
+        if (window && window.automatesync && window.automatesync.setRequestParameter) {
+            setCookie(window.automatesync.requestParameter, user_input);
+            window.automatesync.setRequestParameter = false;
+        }
+        if (window && window.automatesync && window.automatesync.intent) {
+            user_input = window.automatesync.intent;
+            window.automatesync.intent = null; // Set intent to null after assigning it to user_input
+        }
+        
         
         fetch('/chat', {
             method: 'POST',
@@ -50,9 +67,37 @@ function sendMessage() {
         })
         .then(response => response.text())
         .then(bot_response => {
+            try {
+                let responseData = JSON.parse(bot_response);
+            
+                // Check if responseData is an object and not null
+                if (typeof responseData === 'object' && responseData !== null) {
+                    // Check if requestParameter field exists
+                    if ('requestParameter' in responseData) {
+                        // requestParameter field exists, you can access its value
+                        if (window && window.automatesync) {
+                            window.automatesync.setRequestParameter = true;
+                            window.automatesync.requestParameter = responseData.requestParameter;
+                            window.automatesync.intent = responseData.intent;
+                            bot_response = responseData.description;
+                            console.log("requestParameter exists:", responseData.requestParameter);
+                        }
+                    } else {
+                        // requestParameter field does not exist
+                        console.log("requestParameter does not exist");
+                    }
+                } else {
+                    // responseData is not JSON
+                    console.log("Response is not JSON");
+                }
             botResponseContainer.removeChild(loadingElement);
             appendBotResponse(bot_response);
-        })
+        }catch (error) {
+            console.log("Error parsing JSON:", error);
+        }
+        botResponseContainer.removeChild(loadingElement);
+        appendBotResponse(bot_response);
+    })
         .catch(error => {
             console.error('Error sending message:', error);
         });
@@ -61,6 +106,7 @@ function sendMessage() {
 
     userInputElement.value = '';
 }
+
 // Function to generate a random user ID
 function generateUserId() {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -114,12 +160,6 @@ function handleKeyPress(event) {
     if (event.keyCode === 13) {
         sendMessage();
     }
-}
-
-// Function to handle voice button click
-function handleVoiceButtonClick() {
-    // Add logic for handling voice input if needed
-    console.log("Voice button clicked");
 }
 
 // Add event listeners to call sendMessage on Enter key press

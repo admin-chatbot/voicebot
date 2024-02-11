@@ -11,7 +11,7 @@ from nltk.stem import WordNetLemmatizer
 
 lemmatizer = WordNetLemmatizer()
 
-intents = json.loads(open('chatbot\intents.json').read())
+intents = json.loads(open('intents.json').read())
 
 words = []
 classes = []

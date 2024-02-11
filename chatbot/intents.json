@@ -42,5 +42,11 @@
             "responses":["certainly, share price is"],
             "context":[""]
 
+        },
+        {
+            "tag":"todos",
+            "patterns":["what is my todo list?","tasks to do","work needs to be completed for me","work for me","tasks for me","todos"],
+            "responses":["I am sorry, i could not find any task at the moment"],
+            "context":[""]
         }
     ]}

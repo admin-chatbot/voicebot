@@ -5,7 +5,7 @@ from datetime import datetime, timezone
 
 def load_config():
     # Load configuration from file
-    with open("chatbot/config.json", "r") as config_file:
+    with open("config.json", "r") as config_file:
         config = json.load(config_file)
         print("config values are", config)
         print("uri from config is", config.get("mongo_config", {}).get("uri"))
@@ -68,30 +68,29 @@ def initiate_query_lookup(keyword_field, keyword_value,client_id):
     results = query_mongodb(db_middleware, keyword_field, keyword_value, client_id)
 
     result_values = process_results(results)
-
+    insert_to_servicelog(keyword_value,keyword_value,client_id,result_values[0]['endpoint'])
     close_connection(db_middleware)
     print(f"results from the service query '{result_values}'")
 
     return result_values
-def write_mongodb_servicelog(db_middleware, keyword_field, keyword_value):
+def write_mongodb_servicelog(db_middleware, keyword_field, keyword_value,client_id,endpoint):
     # Example query
     print(f"insert the mongodb database with field name - '{keyword_field}' and value - '{keyword_value}'")
-    results = db_middleware.execute_servicelog_insert(keyword_field, keyword_value)       
+    results = db_middleware.execute_servicelog_insert(keyword_field, keyword_value,client_id,endpoint)       
     return results
 
-def insert_to_servicelog(keyword_field, keyword_value):
+def insert_to_servicelog(keyword_field, keyword_value,client_id,endpoint):
     config = load_config()
     escape_credentials(config)
     
     db_middleware = create_db_middleware(config)
 
-    results = write_mongodb_servicelog(db_middleware, keyword_field, keyword_value)
+    results = write_mongodb_servicelog(db_middleware, keyword_field, keyword_value,client_id,endpoint)
 
-    result_values = process_results(results)
 
     close_connection(db_middleware)
 
-    return result_values
+    return results
 
 def write_mongodb_botrequestlog(db_middleware, user_id, user_input, user_intent):
     # Example query
@@ -134,6 +133,13 @@ def insert_to_botrequestlog(user_id, user_input, user_intent):
 
     # Return any relevant information based on your application needs
     return results
+
+def query_service_parameters(serviceId):
+    config = load_config()
+    escape_credentials(config)
+    
+    db_middleware = create_db_middleware(config)
+    return db_middleware.query_service_params(serviceId)
 
 # If this script is run directly
 if __name__ == "__main__":
