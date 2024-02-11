@@ -1,4 +1,4 @@
-// chat-script.js
+//replace the src url from http://127.0.0.1:5000 to the one where chatbot is hosted.
 
 (function () {
     // Create a chat container
@@ -11,16 +11,25 @@
     // Create a chat icon
     const chatIcon = document.createElement('div');
     chatIcon.id = 'chatIcon';
-    chatIcon.innerHTML = '<img src="static/assets/chat-icon.svg" alt="Chat Icon" style="width: 100%; height: 100%;">';
+    //need to update the link
+    chatIcon.innerHTML = '<img src="http://13.126.99.220:8080/static/assets/chat-icon.svg" alt="Chat Icon" style="width: 100%; height: 100%;">';
 
     chatIcon.onclick = toggleChat;
 
     // Append the chat icon to the body
     document.body.appendChild(chatIcon);
 
+    // Inject the stylesheet link
+    const styleLink = document.createElement('link');
+    styleLink.rel = 'stylesheet';
+    //need to update the link
+    styleLink.href = 'http://13.126.99.220:8080/static/css/chat-style.css';
+    document.head.appendChild(styleLink);
+
     // Create the chat form and append it to the chat container
     const chatForm = document.createElement('iframe');
-    chatForm.src = 'chat-form'; // Replace with your actual chat form URL
+    //need to update the link
+    chatForm.src = 'http://13.126.99.220:8080/chat-form'; // Replace with your actual chat form URL
     chatForm.width = '100%';
     chatForm.height = '100%';
     chatForm.frameBorder = '0';
@@ -32,3 +41,4 @@
         chatContainer.style.display = chatContainer.style.display === 'none' ? 'block' : 'none';
     }
 })();
+

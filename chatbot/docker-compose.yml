@@ -1,0 +1,17 @@
+version:  "3.7"
+
+services:
+  chatbot:
+    container_name: chatbot
+    image: sspatra25/chatbot
+    ports:
+      - "5000:5000"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 300M
+    build:
+      context: .
+      dockerfile: Dockerfile
