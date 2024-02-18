@@ -48,5 +48,17 @@
             "patterns":["what is my todo list?","tasks to do","work needs to be completed for me","work for me","tasks for me","todos"],
             "responses":["I am sorry, i could not find any task at the moment"],
             "context":[""]
+        },
+        {
+            "tag":"catfact",
+            "patterns":["Get facts for the cat","catfact","fact for cat","cat fact","tell me about some catfact"],
+            "responses":["I am sorry, i could not find any task at the moment"],
+            "context":[""]
+        },
+        {
+            "tag":"localtime",
+            "patterns":["local date time","get local date and time","what is my local time","get geo time","can you give me local time","my local time"],
+            "responses":["I am sorry, i could not find any task at the moment"],
+            "context":[""]
         }
     ]}

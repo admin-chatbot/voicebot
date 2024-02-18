@@ -60,32 +60,40 @@ def parse_response(response, response_schema, bot_response_template):
     processed_response = bot_response_template
     for key, value in response.items():
         if key in processed_response:
-            processed_response = processed_response.replace('{{' + key + '}}', str(response.get(key, '')))
+            split_keys = key.split('.')
+            result = response
+            for key in split_keys:
+                result = result[key]
+            processed_response = processed_response.replace('{{' + key + '}}', result)
     
     return processed_response
 
 def make_request(endpoint, method,params):
-    if params[0]['type'] == "query_param" :
-        query_param = params[0]['name']
-        query_param_value = request.cookies.get(query_param)
-        if query_param_value:
-            endpoint = endpoint.replace(f"{{{{{query_param}}}}}", query_param_value)
-        else :
-            return "request_parameter"
-    if params[0]['type'] == "path_param" :
-        path_param = params[0]['name']
-        path_param_value = request.cookies.get(params[0].path_param)
-        if query_param_value:
-            endpoint = endpoint.replace(f"{{{{{path_param}}}}}", path_param_value)
-        else :
-            return "request_parameter"
-    if params[0]['type'] == "body" :
-        body = params[0]['name']
-        body_value = request.cookies.get(params[0].path_param)
-        if body_value:
-            endpoint = endpoint.replace(f"{{{{{path_param}}}}}", path_param_value)
-        else :
-            return "request_parameter"
+    if params:
+        if params[0]['type'] == "query_param":
+            query_param = params[0]['name']
+            query_param_value = request.cookies.get(query_param)
+            if query_param_value:
+                endpoint = endpoint.replace(f"{{{{{query_param}}}}}", query_param_value)
+            else:
+                return "request_parameter"
+        elif params[0]['type'] == "path_param":
+            path_param = params[0]['name']
+            path_param_value = request.cookies.get(params[0]['path_param'])
+            if path_param_value:
+                endpoint = endpoint.replace(f"{{{{{path_param}}}}}", path_param_value)
+            else:
+                return "request_parameter"
+        elif params[0]['type'] == "body":
+            body = params[0]['name']
+            body_value = request.cookies.get(body)
+            if body_value:
+                endpoint = endpoint.replace(f"{{{{{body}}}}}", body_value)
+            else:
+                return "request_parameter"
+    else:
+        print("params_array_empty")
+
     if method == 'GET':
         response = requests.get(endpoint)
         return response.json() if response.status_code == 200 else None
