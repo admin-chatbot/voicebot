@@ -8,3 +8,5 @@ tensorflow
 pymongo
 # "import nltk; nltk.download('omw-1.4'); nltk.download('wordnet')"
 # refer the link for set up details - https://dev.to/francescoxx/dockerize-a-python-application-1olg
+# dependencies 
+# pip install flask scikit-learn nltk spacy nltk keras tensorflow pymongo

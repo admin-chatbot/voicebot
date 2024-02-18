@@ -28,6 +28,8 @@ h1 {
 
 #botResponseContainer {
     margin-top: 10px;
+    overflow-y: auto;
+    max-height: 300px;
 }
 
 #botResponse {
@@ -57,6 +59,7 @@ h1 {
     bottom: 20px;
     left: 20px;
     right: 20px;
+    overflow-y: auto;
 }
 
 #user_input {
