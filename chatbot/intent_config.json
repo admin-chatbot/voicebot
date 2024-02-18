@@ -1,4 +1,7 @@
 {
     "intentList":["leaves",
-                  "vacation","todos"]
+                  "vacation",
+                  "todos",
+                  "catfact",
+                "localtime"]
 }
