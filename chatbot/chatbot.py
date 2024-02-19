@@ -3,11 +3,14 @@ import json
 import pickle
 import numpy as np
 import nltk
+import os
 
 from nltk.stem import WordNetLemmatizer
 from keras.models import load_model
 
 lemmatizer = WordNetLemmatizer()
+cwd = os.getcwd()
+print("Current working directory",cwd)
 intents = json.loads(open('intents.json').read())
 
 words = pickle.load(open('words.pkl', 'rb'))

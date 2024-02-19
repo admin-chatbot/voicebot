@@ -28,8 +28,6 @@ h1 {
 
 #botResponseContainer {
     margin-top: 10px;
-    overflow-y: auto;
-    max-height: calc(100vh - 250px);
 }
 
 #botResponse {

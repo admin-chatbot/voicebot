@@ -1,64 +1,193 @@
-{"intents": [
-        {"tag": "greeting",
-         "patterns": ["Hi there", "How are you", "Is anyone there?","Hey","Hola", "Hello", "Good day"],
-         "responses": ["Hello", "Good to see you again", "Hi there, how can I help?"],
-         "context": [""]
-        },
-        {"tag": "goodbye",
-         "patterns": ["Bye", "See you later", "Goodbye", "Nice chatting to you, bye", "Till next time"],
-         "responses": ["See you!", "Have a nice day", "Bye! Come back again soon."],
-         "context": [""]
-        },
-        {"tag": "thanks",
-         "patterns": ["Thanks", "Thank you", "That's helpful", "Awesome, thanks", "Thanks for helping me"],
-         "responses": ["My pleasure", "You're Welcome"],
-         "context": [""]
-        },
-        {"tag": "query",
-         "patterns": ["What is Simplilearn?"],
-         "responses": ["Simplilearn is the popular online Bootcamp & online courses learning platform "],
-         "context": [""]
-        },
-        {"tag": "leaves",
-         "patterns": ["How many leaves company provide?","company leave policy","leaves my company has"],
-         "responses": ["company provides 5 leaves "],
-         "context": [""]
-        },
-        {"tag":"taxinformation",
-         "patterns":["can you do my taxes?","do my taxes","tax calculation","help with my taxes"],
-         "responses":["certainly,please provide your form16 or call at 888"],
-         "context":[""]
+{
+    "intents": [
+        {
+            "tag": "greeting",
+            "patterns": [
+                "Hi there",
+                "How are you",
+                "Is anyone there?",
+                "Hey",
+                "Hola",
+                "Hello",
+                "Good day"
+            ],
+            "responses": [
+                "Hello",
+                "Good to see you again",
+                "Hi there, how can I help?"
+            ],
+            "context": [
+                ""
+            ]
         },
         {
-            "tag":"insurancepolicy",
-            "patterns":["do you provide insurance?","how much does premium insurance costs","insurance costs"],
-            "responses":["certainly, premium insurance cost is 400 ruppees"],
-            "context":[""]
-
+            "tag": "goodbye",
+            "patterns": [
+                "Bye",
+                "See you later",
+                "Goodbye",
+                "Nice chatting to you, bye",
+                "Till next time"
+            ],
+            "responses": [
+                "See you!",
+                "Have a nice day",
+                "Bye! Come back again soon."
+            ],
+            "context": [
+                ""
+            ]
         },
         {
-            "tag":"stocks",
-            "patterns":["what is the stock price?","share price","price of share"],
-            "responses":["certainly, share price is"],
-            "context":[""]
-
+            "tag": "thanks",
+            "patterns": [
+                "Thanks",
+                "Thank you",
+                "That's helpful",
+                "Awesome, thanks",
+                "Thanks for helping me"
+            ],
+            "responses": [
+                "My pleasure",
+                "You're Welcome"
+            ],
+            "context": [
+                ""
+            ]
         },
         {
-            "tag":"todos",
-            "patterns":["what is my todo list?","tasks to do","work needs to be completed for me","work for me","tasks for me","todos"],
-            "responses":["I am sorry, i could not find any task at the moment"],
-            "context":[""]
+            "tag": "query",
+            "patterns": [
+                "What is Simplilearn?"
+            ],
+            "responses": [
+                "Simplilearn is the popular online Bootcamp & online courses learning platform "
+            ],
+            "context": [
+                ""
+            ]
         },
         {
-            "tag":"catfact",
-            "patterns":["Get facts for the cat","catfact","fact for cat","cat fact","tell me about some catfact"],
-            "responses":["I am sorry, i could not find any task at the moment"],
-            "context":[""]
+            "tag": "leaves",
+            "patterns": [
+                "How many leaves company provide?",
+                "company leave policy",
+                "leaves my company has"
+            ],
+            "responses": [
+                "company provides 5 leaves "
+            ],
+            "context": [
+                ""
+            ]
         },
         {
-            "tag":"localtime",
-            "patterns":["local date time","get local date and time","what is my local time","get geo time","can you give me local time","my local time"],
-            "responses":["I am sorry, i could not find any task at the moment"],
-            "context":[""]
+            "tag": "taxinformation",
+            "patterns": [
+                "can you do my taxes?",
+                "do my taxes",
+                "tax calculation",
+                "help with my taxes"
+            ],
+            "responses": [
+                "certainly,please provide your form16 or call at 888"
+            ],
+            "context": [
+                ""
+            ]
+        },
+        {
+            "tag": "insurancepolicy",
+            "patterns": [
+                "do you provide insurance?",
+                "how much does premium insurance costs",
+                "insurance costs"
+            ],
+            "responses": [
+                "certainly, premium insurance cost is 400 ruppees"
+            ],
+            "context": [
+                ""
+            ]
+        },
+        {
+            "tag": "stocks",
+            "patterns": [
+                "what is the stock price?",
+                "share price",
+                "price of share"
+            ],
+            "responses": [
+                "certainly, share price is"
+            ],
+            "context": [
+                ""
+            ]
+        },
+        {
+            "tag": "todos",
+            "patterns": [
+                "what is my todo list?",
+                "tasks to do",
+                "work needs to be completed for me",
+                "work for me",
+                "tasks for me",
+                "todos"
+            ],
+            "responses": [
+                "I am sorry, i could not find any task at the moment"
+            ],
+            "context": [
+                ""
+            ]
+        },
+        {
+            "tag": "catfact",
+            "patterns": [
+                "Get facts for the cat",
+                "catfact",
+                "fact for cat",
+                "cat fact",
+                "tell me about some catfact"
+            ],
+            "responses": [
+                "I am sorry, i could not find any task at the moment"
+            ],
+            "context": [
+                ""
+            ]
+        },
+        {
+            "tag": "localtime",
+            "patterns": [
+                "local date time",
+                "get local date and time",
+                "what is my local time",
+                "get geo time",
+                "can you give me local time",
+                "my local time"
+            ],
+            "responses": [
+                "I am sorry, i could not find any task at the moment"
+            ],
+            "context": [
+                ""
+            ]
+        },
+        {
+            "context": [
+                ""
+            ],
+            "patterns": [
+                "test data",
+                "test responses"
+            ],
+            "responses": [
+                "for test data you would have to request your company",
+                "i can try to help with test data",
+                "sorry, i dont have tests data"
+            ],
+            "tag": "test"
         }
-    ]}
+    ]
+}

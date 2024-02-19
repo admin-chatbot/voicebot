@@ -1,35 +1,17 @@
 function appendUserInput(userInput) {
     const botResponseContainer = document.getElementById('botResponseContainer');
+    const chatResponseContainer = document.getElementById('chatContainer');
     const userInputElement = document.createElement('p');
     userInputElement.innerHTML = `<strong style="font-size: 20px;">You:</strong><br>${userInput}`;
     
     botResponseContainer.appendChild(userInputElement);
-    botResponseContainer.scrollTop = botResponseContainer.scrollHeight;
+    chatResponseContainer.scrollTop = chatResponseContainer.scrollHeight;
 }
+
 
 function appendBotResponse(response, type) {
     const botResponseContainer = document.getElementById('botResponseContainer');
-    const botResponseElement = document.createElement('p');
-
-    // Check if the response is equal to the clientId
-    if (response === "requestClientID") {
-        botResponseElement.innerHTML = `<strong style="font-size: 20px;" id="requestClientID">Automate Sync:</strong><br>Please provide your client id`;
-        if (window && window.automatesync) {
-            window.automatesync.requestClientID = true;
-        }
-    } else {
-        botResponseElement.innerHTML = `<strong style="font-size: 20px;">Automate Sync:</strong><br>${response}`;
-        if (window && window.automatesync) {
-            window.automatesync.hasClientID = true;
-            window.automatesync.requestClientID = false;
-        }
-    }
-
-    botResponseContainer.appendChild(botResponseElement);
-    botResponseContainer.scrollTop = botResponseContainer.scrollHeight;
-}
-function appendBotResponse(response, type) {
-    const botResponseContainer = document.getElementById('botResponseContainer');
+    const chatResponseContainer = document.getElementById('chatContainer');
     const botResponseElement = document.createElement('p');
 
     let index = 0; // Index to track the character being appended
@@ -39,11 +21,11 @@ function appendBotResponse(response, type) {
             botResponseElement.innerHTML += response.charAt(index);
             index++;
             // Scroll to the bottom after each character is appended
-            botResponseContainer.scrollTop = botResponseContainer.scrollHeight;
-            setTimeout(typeWriter, 50); // Adjust the delay (in milliseconds) as needed
+            chatResponseContainer.scrollTop = chatResponseContainer.scrollHeight;
+            setTimeout(typeWriter, 20); // Adjust the delay (in milliseconds) as needed
         } else {
             // Scroll to the bottom after typing is complete
-            botResponseContainer.scrollTop = botResponseContainer.scrollHeight;
+            chatResponseContainer.scrollTop = chatResponseContainer.scrollHeight;
           
         }
     }
@@ -77,8 +59,10 @@ function sendMessage() {
     const loadingElement = document.createElement('p');
     loadingElement.innerHTML = 'Bot is typing...';
     loadingElement.classList.add('loading-animation');
+    const botResponseContainer = document.getElementById('botResponseContainer');
     botResponseContainer.appendChild(loadingElement);
-    botResponseContainer.scrollTop = botResponseContainer.scrollHeight;
+    const chatResponseContainer = document.getElementById('chatContainer');
+    chatResponseContainer.scrollTop = chatResponseContainer.scrollHeight;
     if (!window.automatesync) {
         window.automatesync = {}
     }

@@ -16,6 +16,8 @@ class DatabaseMiddleware:
     
     def query_service_params(self,serviceId):
         return self.repository.query_service_params(serviceId)
+    def get_next_sequence_value(self,sequence_name):
+        return self.repository.get_next_sequence_value(sequence_name)
 
     def close_connection(self):
         self.repository.close_connection()

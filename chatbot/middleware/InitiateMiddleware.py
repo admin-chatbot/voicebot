@@ -99,10 +99,12 @@ def write_mongodb_botrequestlog(db_middleware, user_id, user_input, user_intent)
 
     # Example query
     print(f"Inserting into 'botrequestlog' collection - User ID: {user_id}, User Input: {user_input}, User Intent: {user_intent}, Timestamp: {current_utc_time}")
-    
+    id = db_middleware.get_next_sequence_value("bot_request_log")
     # Modify the following line based on the structure of your 'botrequestlog' documents
     document = {
+        "_id":id,
         "user_id": user_id,
+        "client_id":"9",
         "user_input": user_input,
         "user_intent": user_intent,
         "timestamp": current_utc_time

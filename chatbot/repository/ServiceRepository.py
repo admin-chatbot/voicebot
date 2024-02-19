@@ -39,6 +39,16 @@ class ServiceRepository:
         document = data
         result = collection.insert_one(document)
         return result.inserted_id
-
+    def get_next_sequence_value(self,sequence_name):
+        self.collection = self.db.database_sequences
+        self.sequence_name = sequence_name
+        sequence_doc = self.collection.find_one_and_update(
+            {'_id': self.sequence_name},
+            {'$inc': {'sequence_value': 1}},
+            upsert=True,
+            return_document=True
+        )
+        return sequence_doc['sequence_value']
+    
     def close_connection(self):
         self.client.close()
