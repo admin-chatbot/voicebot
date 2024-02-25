@@ -10,3 +10,7 @@ pymongo
 # refer the link for set up details - https://dev.to/francescoxx/dockerize-a-python-application-1olg
 # dependencies 
 # pip install flask scikit-learn nltk spacy nltk keras tensorflow pymongo
+#docker commands on server 
+    # docker kill container
+    # docker pull image image_name
+    #docker run -p 8080:5000 sspatra25/chatbot

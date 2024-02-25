@@ -53,7 +53,7 @@ function appendBotResponse(response, type) {
 function sendMessage() {
     const userInputElement = document.getElementById('user_input');
     let user_input = userInputElement.value;
-
+    let responded_to_user = false;
     appendUserInput(user_input);
 
     const loadingElement = document.createElement('p');
@@ -63,6 +63,7 @@ function sendMessage() {
     botResponseContainer.appendChild(loadingElement);
     const chatResponseContainer = document.getElementById('chatContainer');
     chatResponseContainer.scrollTop = chatResponseContainer.scrollHeight;
+    
     if (!window.automatesync) {
         window.automatesync = {}
     }
@@ -77,7 +78,7 @@ function sendMessage() {
             window.automatesync.setRequestParameter = false;
         }
         if (window && window.automatesync && window.automatesync.intent) {
-            user_input = window.automatesync.intent;
+            //user_input = window.automatesync.intent;
             window.automatesync.intent = null; // Set intent to null after assigning it to user_input
         }
         
@@ -87,8 +88,8 @@ function sendMessage() {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: `user_input=${encodeURIComponent(user_input)}`,
-        })
+            body: `user_input=${encodeURIComponent(user_input)}&user_id=${encodeURIComponent(window.automatesync.userId)}`,
+        })        
         .then(response => response.text())
         .then(bot_response => {
             try {
@@ -106,21 +107,33 @@ function sendMessage() {
                             bot_response = responseData.description;
                             console.log("requestParameter exists:", responseData.requestParameter);
                         }
+                    
                     } else {
-                        // requestParameter field does not exist
                         console.log("requestParameter does not exist");
+
                     }
                 } else {
                     // responseData is not JSON
                     console.log("Response is not JSON");
                 }
-            botResponseContainer.removeChild(loadingElement);
-            appendBotResponse(bot_response);
+                if(responseData.type=="pdf") {
+                    // requestParameter field does not exist
+                    botResponseContainer.removeChild(loadingElement);
+                    appendPDF("dowload.pdf",responseData.fileName)
+                    responded_to_user=true
+                }else{
+                    botResponseContainer.removeChild(loadingElement);
+                    appendBotResponse(bot_response);
+                }
+            
         }catch (error) {
             console.log("Error parsing JSON:", error);
         }
+        if(!responded_to_user){
+            
         botResponseContainer.removeChild(loadingElement);
         appendBotResponse(bot_response);
+        }
     })
         .catch(error => {
             console.error('Error sending message:', error);
@@ -130,6 +143,28 @@ function sendMessage() {
 
     userInputElement.value = '';
 }
+function appendPDF(pdfFileName, pdfLocation) {
+    const pdfContainer = document.getElementById('botResponseContainer');
+    pdfContainer.innerHTML = `<strong style="font-size: 20px;">Automate Sync:</strong><br>`;
+
+    // Create a download link
+    const downloadLink = document.createElement('a');
+    downloadLink.href = pdfLocation;
+    downloadLink.setAttribute('download', pdfFileName);
+    downloadLink.innerText = 'Download PDF';
+
+    // Create an iframe for embedded view
+    const embedView = document.createElement('iframe');
+    embedView.src = pdfLocation;
+    embedView.style.width = '100%';
+    embedView.style.height = '600px'; // Set the height as needed
+
+    // Append the download link and embedded view to the container
+    pdfContainer.appendChild(downloadLink);
+    pdfContainer.appendChild(document.createElement('br')); // Add a line break
+    pdfContainer.appendChild(embedView);
+}
+
 
 // Function to generate a random user ID
 function generateUserId() {
@@ -155,7 +190,10 @@ function setCookie(name, value, days) {
 // Example of generating a user ID and setting a cookie
 const generatedUserId = generateUserId();
 setCookie('userId', generatedUserId, 30); // Set the cookie to expire in 30 days
-
+if (!window.automatesync) {
+    window.automatesync = {}
+}
+window.automatesync.userId=generatedUserId;
 console.log('Generated User ID:', generatedUserId);
 
 // Function to get the value of a cookie by name
@@ -191,8 +229,7 @@ document.getElementById('user_input').addEventListener('keypress', handleKeyPres
 
 // Add event listener for voice button click
 document.getElementById('voiceButton').addEventListener('click', handleVoiceButtonClick);
-
-function startSpeechRecognition() {
+function handleVoiceButtonClick(event){
     const recognition = new webkitSpeechRecognition() || new SpeechRecognition();
 
     recognition.lang = 'en-US';
@@ -213,4 +250,5 @@ function startSpeechRecognition() {
     };
 
     recognition.start();
+
 }

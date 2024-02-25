@@ -4,6 +4,10 @@ import pickle
 import numpy as np
 import tensorflow as tf
 import nltk
+from chatbot import predict_class
+import importlib
+import chatbot
+
 
 def train_chatbot_model():
     nltk.download('punkt')
@@ -67,6 +71,11 @@ def train_chatbot_model():
     hist = model.fit(np.array(trainX), np.array(trainY), epochs=200, batch_size=5, verbose=1)
     model.save('chatbot_model.h5', hist)
     print('Training done')
+    importlib.reload(chatbot)
+    predict_class("test")
 
 if __name__ == '__main__':
+    
     train_chatbot_model()
+
+

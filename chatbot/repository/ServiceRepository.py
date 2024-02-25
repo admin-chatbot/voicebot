@@ -39,6 +39,7 @@ class ServiceRepository:
         document = data
         result = collection.insert_one(document)
         return result.inserted_id
+    
     def get_next_sequence_value(self,sequence_name):
         self.collection = self.db.database_sequences
         self.sequence_name = sequence_name
@@ -49,6 +50,40 @@ class ServiceRepository:
             return_document=True
         )
         return sequence_doc['sequence_value']
+    
+    def update_user_action(self,document,query):
+        collection = self.db.user_actions
+        result = collection.update_one(query, {"$set": document})
+        return result
+    
+    def query_user_action(self,user_id):
+        collection = self.db.user_actions
+        query = {"user_id":user_id}
+        results = collection.find(query)
+        if results:
+            for result in results:
+                print("user action found found:", result)
+                return result
+            else:
+                print("No documents found for user:", user_id)
+                return None
+
+    def delete_user_action(self,user_id):
+        collection = self.db.user_actions
+        query = {"user_id":user_id}
+        results = collection.find_one_and_delete(query)
+        if results:
+            for result in results:
+                print("user action found found:", result)
+                return result
+            else:
+                print("No documents found for user:", user_id)
+                return None
+    
+    def create_user_action(self,document):
+        collection = self.db.user_actions
+        results = collection.insert_one(document)
+        return collection.find_one(results.inserted_id)
     
     def close_connection(self):
         self.client.close()

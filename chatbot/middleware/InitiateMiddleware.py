@@ -92,7 +92,7 @@ def insert_to_servicelog(keyword_field, keyword_value,client_id,endpoint):
 
     return results
 
-def write_mongodb_botrequestlog(db_middleware, user_id, user_input, user_intent):
+def write_mongodb_botrequestlog(db_middleware, user_id, user_input, user_intent,request_id,response):
     # Example query
     # Get the current UTC time
     current_utc_time = datetime.utcnow().replace(tzinfo=timezone.utc)
@@ -107,7 +107,9 @@ def write_mongodb_botrequestlog(db_middleware, user_id, user_input, user_intent)
         "client_id":"9",
         "user_input": user_input,
         "user_intent": user_intent,
-        "timestamp": current_utc_time
+        "timestamp": current_utc_time,
+        "requestId":request_id,
+        "response":response
     }
     
     results = db_middleware.execute_botrequestlog_insert(document)
@@ -120,13 +122,13 @@ def write_mongodb_botrequestlog(db_middleware, user_id, user_input, user_intent)
     
     return results
 
-def insert_to_botrequestlog(user_id, user_input, user_intent):
+def insert_to_botrequestlog(user_id, user_input, user_intent,request_id,json_response):
     config = load_config()
     escape_credentials(config)
     
     db_middleware = create_db_middleware(config)
 
-    results = write_mongodb_botrequestlog(db_middleware, user_id, user_input, user_intent)
+    results = write_mongodb_botrequestlog(db_middleware, user_id, user_input, user_intent,request_id,json_response)
 
     # You can choose whether or not to process and return results based on your requirements
     # result_values = process_results(results)
@@ -142,6 +144,50 @@ def query_service_parameters(serviceId):
     
     db_middleware = create_db_middleware(config)
     return db_middleware.query_service_params(serviceId)
+
+def update_user_action(user_id,endpoint,method,response_schema,bot_response_template,serviceId,params,action):
+    config = load_config()
+    escape_credentials(config)
+    db_middleware = create_db_middleware(config)
+    id = db_middleware.query_user_action(user_id)["_id"]
+    document = {
+        "_id":id,
+        "user_id":user_id,
+         "endpoint":endpoint,
+         "method":method,
+         "response_schema":response_schema,
+         "bot_response_template":bot_response_template,
+         "serviceId":serviceId,
+         "params":params,
+         "action":action
+    }
+    query = {"user_id":user_id}
+    return db_middleware.update_user_action(document,query)
+
+def delete_user_action(user_id):
+    config = load_config()
+    escape_credentials(config)
+    db_middleware = create_db_middleware(config)
+    return db_middleware.delete_user_action(user_id)
+
+def query_user_action(user_id):
+    config = load_config()
+    escape_credentials(config)
+    db_middleware = create_db_middleware(config)
+    return db_middleware.query_user_action(user_id)
+
+def create_user_action(user_id,request_id,action):
+    config = load_config()
+    escape_credentials(config)
+    db_middleware = create_db_middleware(config)
+    id = db_middleware.get_next_sequence_value("user_actions")
+    document = {
+        "_id":id,
+        "user_id":user_id,
+        "requestId":request_id,
+        "action":action
+    }
+    return db_middleware.create_user_action(document)
 
 # If this script is run directly
 if __name__ == "__main__":

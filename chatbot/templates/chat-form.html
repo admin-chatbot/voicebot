@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AutoBot</title>
 </head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-sldTmufXB3C5ueMd6QjJtUHXNyIj6Ki2qLyRpNhe2TdyYv8OCWYhXuAjk+TKjKaB+T0/DQDw0pEe1qgXo0NHGA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 <body>
     <header>
@@ -32,10 +33,14 @@
         <input type="text" id="user_input" placeholder="How can i help?" name="user_input" required>
         
         <!-- Add a button to trigger voice input -->
-        <button type="button" id="voiceButton" onclick="startSpeechRecognition()">Speak</button>
-
+        <!-- You can replace 'fa fa-microphone' with the appropriate class for your icon -->
         <button type="button" id="submitButton" onclick="sendMessage()">Send</button>
-    </form>
+
+        <button class="icon-button" id="voiceButton" onclick="startSpeechRecognition()">
+            <img src="static/assets/microphone.png" alt="Description of the image" style="height: 15px;">
+        </button>
+
+   </form>
     <script async src="https://cse.google.com/cse.js?cx=33e73d73629a049bf"></script>
     <!-- Include the script for voice input and output -->
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>

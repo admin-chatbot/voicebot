@@ -58,10 +58,10 @@
         {
             "tag": "query",
             "patterns": [
-                "What is Simplilearn?"
+                "What is automate sync?","automate","sync"
             ],
             "responses": [
-                "Simplilearn is the popular online Bootcamp & online courses learning platform "
+                "Automatesync is an advanced bot with various capabilities "
             ],
             "context": [
                 ""
@@ -72,7 +72,8 @@
             "patterns": [
                 "How many leaves company provide?",
                 "company leave policy",
-                "leaves my company has"
+                "leaves my company has",
+                "leave","leaves"
             ],
             "responses": [
                 "company provides 5 leaves "
@@ -132,7 +133,8 @@
                 "work needs to be completed for me",
                 "work for me",
                 "tasks for me",
-                "todos"
+                "todos",
+                "tasks i have"
             ],
             "responses": [
                 "I am sorry, i could not find any task at the moment"
@@ -179,15 +181,34 @@
                 ""
             ],
             "patterns": [
-                "test data",
-                "test responses"
+                "how many leaves i have",
+                "my leave balance",
+                "leaves i have",
+                "balance of my leaves"
             ],
             "responses": [
-                "for test data you would have to request your company",
-                "i can try to help with test data",
-                "sorry, i dont have tests data"
+                "cant provide the leave balance data",
+                "no leave balance data",
+                "sorry, i dont have leave balance data"
             ],
-            "tag": "test"
+            "tag": "leave balance"
+        },
+        {
+            "context": [
+                ""
+            ],
+            "patterns": [
+                "evacuation",
+                "drill",
+                "evacuation drill",
+                "balance of my leaves"
+            ],
+            "responses": [
+                "cant provide the leave balance data",
+                "no leave balance data",
+                "sorry, i dont have leave balance data"
+            ],
+            "tag": "evacuation"
         }
     ]
 }
